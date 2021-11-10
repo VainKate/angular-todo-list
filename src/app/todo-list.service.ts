@@ -15,7 +15,6 @@ export class TodoListService {
   constructor() {}
 
   getTodos() {
-    console.log(this.todoList.value);
     return this.todoList;
   }
 
