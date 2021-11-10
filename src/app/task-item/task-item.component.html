@@ -1,0 +1,13 @@
+<div>
+  <input type="checkbox" [checked]="task.done">
+  <label for="">{{task.label}}</label>
+
+  <button>
+    Éditer
+    <fa-icon [icon]="faPencilAlt"></fa-icon>
+  </button>
+  <button>
+    Supprimer
+    <fa-icon [icon]="faTrash"></fa-icon>
+  </button>
+</div>
