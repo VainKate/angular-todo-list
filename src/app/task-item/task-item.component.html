@@ -1,12 +1,12 @@
 <div>
-  <input type="checkbox" [checked]="task.done">
+  <input type="checkbox" [checked]="task.done" (change)="toggleStatus()">
   <label for="">{{task.label}}</label>
 
   <button>
     Éditer
     <fa-icon [icon]="faPencilAlt"></fa-icon>
   </button>
-  <button>
+  <button (click)="onDelete()">
     Supprimer
     <fa-icon [icon]="faTrash"></fa-icon>
   </button>

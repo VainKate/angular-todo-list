@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { tasks } from 'src/data/tasks.data';
+
+import { Task } from 'src/data/tasks.data';
+import { TodoListService } from '../todo-list.service';
 
 @Component({
   selector: 'app-tasks-list',
@@ -7,12 +9,16 @@ import { tasks } from 'src/data/tasks.data';
   styleUrls: ['./tasks-list.component.scss'],
 })
 export class TasksListComponent implements OnInit {
-  tasks = tasks.sort((value) => {
-    // sort done's false booleans before true and then, by id from smaller to taller
-    return value.done ? 1 : -1 || value.id ? -1 : 1;
-  });
+  tasks: Task[] = [];
 
-  constructor() {}
+  constructor(private todoListService: TodoListService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.todoListService.getTodos().subscribe((todos) => {
+      this.tasks = todos.sort((value) => {
+        // sort done's false booleans before true and then, by id from smaller to taller
+        return value.done ? 1 : -1 || value.id ? -1 : 1;
+      });
+    });
+  }
 }
