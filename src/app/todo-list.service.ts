@@ -15,11 +15,19 @@ export class TodoListService {
   constructor() {}
 
   getTodos() {
+    this.sortTodoList(this.todoList.value);
     return this.todoList;
   }
 
   getOpenTodosCount() {
     return this.openTodosCount;
+  }
+
+  sortTodoList(todoList: Task[]) {
+    todoList.sort((a, b) => {
+      // sort done's false booleans before true and then, by id from smaller to taller
+      return a.done ? 1 : -1 || a.id - b.id;
+    });
   }
 
   toggleTodoCheck(taskId: number) {
@@ -36,7 +44,19 @@ export class TodoListService {
       }
     });
 
+    this.sortTodoList(newTodosStatus);
     this.todoList.next(newTodosStatus);
+  }
+
+  addTodo(todoToCreate: { label: string; done: boolean }) {
+    const todoIds = this.todoList.value.map((todo) => todo.id);
+    const newTodo: Task = { ...todoToCreate, id: Math.max(...todoIds) + 1 };
+    const newTodoList = [...this.todoList.value];
+    newTodoList.push(newTodo);
+
+    this.sortTodoList(newTodoList);
+    this.todoList.next(newTodoList);
+    this.openTodosCount.next(this.openTodosCount.value + 1);
   }
 
   editTodo(taskId: number, newLabel: string) {

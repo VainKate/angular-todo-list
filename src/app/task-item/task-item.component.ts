@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, HostListener } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import {
   faCheck,
   faPencilAlt,
@@ -15,7 +16,10 @@ import { TodoListService } from '../todo-list.service';
   styleUrls: ['./task-item.component.scss'],
 })
 export class TaskItemComponent implements OnInit {
-  constructor(private todoListService: TodoListService) {}
+  constructor(
+    private todoListService: TodoListService,
+    private formBuilder: FormBuilder
+  ) {}
 
   faPencilAlt = faPencilAlt;
   faTrash = faTrash;
@@ -24,10 +28,15 @@ export class TaskItemComponent implements OnInit {
 
   @Input() task!: Task;
   isEditing: boolean = false;
+  editTaskForm = this.formBuilder.group({
+    label: ['', Validators.required],
+  });
 
   private clickInside = false;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.editTaskForm.setValue({ label: this.task?.label });
+  }
 
   @HostListener('click')
   clickIn() {
@@ -57,5 +66,15 @@ export class TaskItemComponent implements OnInit {
 
   handleSubmit(event: Event) {
     event.preventDefault();
+
+    if (this.editTaskForm.invalid) {
+      return;
+    }
+
+    this.todoListService.editTodo(this.task.id, this.editTaskForm.value.label);
+
+    this.editTaskForm.setValue({ label: this.task?.label });
+    console.log(this.task);
+    this.isEditing = false;
   }
 }

@@ -14,11 +14,6 @@ export class TasksListComponent implements OnInit {
   constructor(private todoListService: TodoListService) {}
 
   ngOnInit(): void {
-    this.todoListService.getTodos().subscribe((todos) => {
-      this.tasks = todos.sort((value) => {
-        // sort done's false booleans before true and then, by id from smaller to taller
-        return value.done ? 1 : -1 || value.id ? -1 : 1;
-      });
-    });
+    this.todoListService.getTodos().subscribe((todos) => (this.tasks = todos));
   }
 }

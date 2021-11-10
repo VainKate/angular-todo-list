@@ -1,0 +1,58 @@
+.todo_item {
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 0.3em;
+  font-size: 1.2em;
+  margin: 0.5em 0;
+  padding: 0 0.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &--done &__label {
+    text-decoration: line-through;
+  }
+
+  &__label,
+  &__input {
+    display: inherit;
+    padding: 1em;
+    flex: 1;
+  }
+
+  &__input {
+    border: none;
+    border-bottom: solid 1px rgb(155, 153, 153);
+    background-color: #eee;
+    max-width: 70%;
+  }
+
+  &__form {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45em 0;
+  }
+
+  &__checkbox {
+    margin-right: 1em;
+    cursor: pointer;
+  }
+
+  &--done {
+    opacity: 0.5;
+  }
+  .delete-button {
+    border: #c70000 2px solid;
+    color: #c70000;
+    border-radius: 5px;
+    margin: 1em;
+    font-size: 0.75em;
+
+    &:hover {
+      background-color: #c70000;
+      color: white;
+    }
+  }
+}

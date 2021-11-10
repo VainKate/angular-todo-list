@@ -1,1 +1,3 @@
-<p>form works!</p>
+<form action="" [formGroup]="addTaskForm" (submit)="createATask($event)">
+  <input type="text" class="input-addTask" placeholder="Ajouter une tâche..." formControlName="label">
+</form>

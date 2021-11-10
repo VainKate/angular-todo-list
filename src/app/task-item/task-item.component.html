@@ -1,26 +1,29 @@
-<div [id]="'todo-'+task.id">
-  <input type="checkbox" [checked]="task.done" (change)="toggleStatus()">
-  <div *ngIf="!isEditing">
-    <label for="">{{task.label}}</label>
-    <button (click)="toggleEdit()">
-      Éditer
-      <fa-icon [icon]="faPencilAlt"></fa-icon>
-    </button>
-    <button (click)="onDelete()">
-      Supprimer
-      <fa-icon [icon]="faTrash"></fa-icon>
-    </button>
-  </div>
+<div *ngIf="!isEditing" [class]="task.done ? 'todo_item todo_item--done' : 'todo_item'">
+  <input type="checkbox" [checked]="task.done" class="todo_item__checkbox" (change)="toggleStatus()">
+  <label for="" class="todo_item__label">{{task.label}}</label>
+  <button (click)="toggleEdit()">
+    Éditer
+    <fa-icon [icon]="faPencilAlt"></fa-icon>
+  </button>
+  <button class="delete-button" (click)="onDelete()">
+    Supprimer
+    <fa-icon [icon]="faTrash"></fa-icon>
+  </button>
+</div>
 
-  <form *ngIf="isEditing" (submit)="handleSubmit($event)">
-    <input type="text" [value]="task.label">
-    <button type="submit">
-      Valider
-      <fa-icon [icon]="faCheck"></fa-icon>
-    </button>
-    <button (click)="toggleEdit()">
-      Annuler
-      <fa-icon [icon]="faTimes"></fa-icon>
-    </button>
+<div *ngIf="isEditing" [class]="task.done ? 'todo_item todo_item--done' : 'todo_item'">
+  <input type="checkbox" [checked]="task.done" class="todo_item__checkbox" (change)="toggleStatus()">
+  <form [formGroup]="editTaskForm" class="todo_item__form" (submit)="handleSubmit($event)">
+    <input type="text" formControlName="label" [placeholder]="task.label" class="todo_item__input">
+    <div>
+      <button type="submit">
+        Valider
+        <fa-icon [icon]="faCheck"></fa-icon>
+      </button>
+      <button (click)="toggleEdit()">
+        Annuler
+        <fa-icon [icon]="faTimes"></fa-icon>
+      </button>
+    </div>
   </form>
 </div>
